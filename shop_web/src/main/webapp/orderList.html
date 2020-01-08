@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="plugins/angularjs/angular.min.js"></script>
+<script type="text/javascript">
+	var app = angular.module('order',[]);
+	app.controller('orderController',function($scope,$http){
+		$scope.orderList = function(){
+			$http.get("../order/list.do").success(
+				function(response){
+					console.log(response);
+					$scope.list=response;
+				}		
+			)
+		}
+	})
+</script>
+<body ng-app="order" ng-controller="orderController" ng-init="orderList();">
+	<table>
+		<tr>
+			<td>订单编号</td>
+			<td>订单名称</td>
+			<td>数量</td>
+			<td>价格</td>
+			<td>状态</td>
+			<td>备注</td>
+			<td>操作</td>
+		</tr>
+		<tr ng-repeat="entity in list">
+			<td>{{$index+1}}</td>
+			<td>{{entity.oname}}</td>
+			<td>{{entity.ocount}}</td>
+			<td>{{entity.oprice}}</td>
+			<td ng-if="entity.status == 0">未发货</td>
+			<td ng-if="entity.status == 1">发货</td>
+			<td>{{entity.bz}}</td>
+			<td>
+				<input type="button" ng-if="entity.status == 0" value="发货">
+				<input type="button" ng-if="entity.status == 1" value="未发货">
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

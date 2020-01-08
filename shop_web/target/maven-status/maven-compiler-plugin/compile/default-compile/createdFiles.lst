@@ -1,0 +1,4 @@
+com\shop\controller\OrderController.class
+com\shop\controller\ShopController.class
+com\shop\service\AuthenticationProviderImpl.class
+com\shop\controller\UserController.class
